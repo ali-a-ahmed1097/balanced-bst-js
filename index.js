@@ -168,7 +168,12 @@ class Tree {
     }
 
     isBalanced() {
-
+        let heightDiffs = [];
+        this.postorder(node => {
+            heightDiffs.push(Math.abs(this.height(node.getLeftChild()) - this.height(node.getRightChild())));
+        });
+        
+        return ((heightDiffs.filter(height => height > 1)).length === 0);
     }
 
     rebalance() {

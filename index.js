@@ -105,6 +105,16 @@ class Tree {
             lChild = parent.getLeftChild();
         }
     }
+
+    find(value) {
+        let parent = this._root;
+        while (parent !== null) {
+            if (value === parent.getValue()) return parent;
+            else if (value < parent.getValue()) parent = parent.getLeftChild();
+            else parent = parent.getRightChild();
+        }
+        return parent;
+    }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {

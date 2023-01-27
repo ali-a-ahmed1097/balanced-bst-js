@@ -129,17 +129,29 @@ class Tree {
         }
     }
 
-    inorder(func) {
-
+    _inorderRecur(func, node) {
+        if (node.getLeftChild()) this._inorderRecur(func, node.getLeftChild());
+        func(node);
+        if (node.getRightChild()) this._inorderRecur(func, node.getRightChild());
     }
 
-    preorder(func) {
+    inorder(func) { this._inorderRecur(func, this._root); }
 
+    _preorderRecur(func, node) {
+        func(node);
+        if (node.getLeftChild()) this._preorderRecur(func, node.getLeftChild());
+        if (node.getRightChild()) this._preorderRecur(func, node.getRightChild());
     }
 
-    postorder(func) {
+    preorder(func) { this._preorderRecur(func, this._root); }
 
+    _postorderRecur(func, node) {
+        if (node.getLeftChild()) this._postorderRecur(func, node.getLeftChild());
+        if (node.getRightChild()) this._postorderRecur(func, node.getRightChild());
+        func(node);
     }
+
+    postorder(func) { this._postorderRecur(func, this._root); }
 
     height(node) {
 
@@ -155,7 +167,7 @@ class Tree {
 
     rebalance() {
         let arr = [];
-        this.levelOrder(node => arr.push(node.getValue()));
+        this.inorder(node => arr.push(node.getValue()));
         this._root = (this.buildTree(arr));
     }
 }
@@ -170,4 +182,4 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
     }
   }
 
-  function make() { return new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]); }
+  function make() { return new Tree([4, 10, 12, 15, 18, 22, 24, 25, 31, 35, 44, 50, 66, 70, 90]); }

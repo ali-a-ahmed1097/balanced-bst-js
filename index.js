@@ -153,9 +153,7 @@ class Tree {
 
     postorder(func) { this._postorderRecur(func, this._root); }
 
-    height(node) {
-
-    }
+    height(node) { return (node ? 1 + Math.max(this.height(node.getLeftChild()), this.height(node.getRightChild())) : 0); } // Nasty one line
 
     depth(node) {
 

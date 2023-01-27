@@ -115,6 +115,19 @@ class Tree {
         }
         return parent;
     }
+
+    levelOrder(func) {
+        let queue = [this._root];
+
+        while (queue.length) {
+            let visited = queue.shift();
+            if (visited) {
+                func(visited);
+                queue.push(visited.getLeftChild());
+                queue.push(visited.getRightChild());
+            }
+        }
+    }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {

@@ -156,7 +156,15 @@ class Tree {
     height(node) { return (node ? 1 + Math.max(this.height(node.getLeftChild()), this.height(node.getRightChild())) : 0); } // Nasty one line
 
     depth(node) {
-
+        
+        let parent = this._root;
+        let nodes = 0;
+        while (true) {
+            if (node.getValue() === parent.getValue()) return nodes;
+            else if (node.getValue() < parent.getValue()) parent = parent.getLeftChild();
+            else parent = parent.getRightChild();
+            nodes++;
+        }
     }
 
     isBalanced() {

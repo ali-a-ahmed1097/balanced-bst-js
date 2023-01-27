@@ -128,6 +128,36 @@ class Tree {
             }
         }
     }
+
+    inorder(func) {
+
+    }
+
+    preorder(func) {
+
+    }
+
+    postorder(func) {
+
+    }
+
+    height(node) {
+
+    }
+
+    depth(node) {
+
+    }
+
+    isBalanced() {
+
+    }
+
+    rebalance() {
+        let arr = [];
+        this.levelOrder(node => arr.push(node.getValue()));
+        this._root = (this.buildTree(arr));
+    }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {

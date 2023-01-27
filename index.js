@@ -34,24 +34,75 @@ class Tree {
         return root;
     }
 
-    insert(value) {
-        if (value === this._root.getValue()) return;
-        let r = this._root;
+    _insertNode(newNode, parent) {
+        let r = parent;
+        let value = newNode.getValue();
 
         while (true) {
-            if (value < r.getValue()){
+            if (value === r.getValue()) return;
+            else if (value < r.getValue()){
                 if (r.getLeftChild() === null) {
-                    r.setLeftChild(new Node(value));
+                    r.setLeftChild(newNode);
                     return;
                 }
                 r = r.getLeftChild();
             } else {
                 if (r.getRightChild() === null) {
-                    r.setRightChild(new Node(value));
+                    r.setRightChild(newNode);
                     return;
                 }
                 r = r.getRightChild();
             }
+        }
+    }
+
+    insert(value) { this._insertNode(new Node(value), this._root); }
+
+    _deleteNode(node) {
+        let parent = null;
+        let rChild = node.getRightChild();
+        let lChild = node.getLeftChild();
+
+        if (rChild === null && lChild === null) return parent;
+        else if (rChild === null) parent = lChild;
+        else if (lChild === null) parent = rChild;
+        else {
+            parent = rChild;
+            let displacedChild = rChild.getLeftChild();
+            rChild.setLeftChild(lChild);
+            if (displacedChild) this._insertNode(displacedChild, parent);
+        }
+        return parent;
+    }
+
+    delete(value) {
+        let parent = this._root;
+        let rChild = parent.getRightChild();
+        let lChild = parent.getLeftChild();
+
+        if (parent.getValue() === value) { // root
+            this._root = this._deleteNode(parent);
+            return;
+        }
+    
+        while (parent !== null) {
+            if (rChild === null && lChild === null) return; // Value not in tree
+            if (value > parent.getValue()) {
+                if (rChild === null) return; // Value not in tree
+                if (rChild.getValue() === value) {
+                    parent.setRightChild(this._deleteNode(rChild));
+                }
+                parent = rChild;
+            } else {
+                if (lChild === null) return; // Value not in tree
+                if (lChild.getValue() === value) {
+                    parent.setLeftChild(this._deleteNode(lChild));
+                }
+                parent = lChild;
+            }
+
+            rChild = parent.getRightChild();
+            lChild = parent.getLeftChild();
         }
     }
 }

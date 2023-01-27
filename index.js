@@ -33,6 +33,27 @@ class Tree {
         
         return root;
     }
+
+    insert(value) {
+        if (value === this._root.getValue()) return;
+        let r = this._root;
+
+        while (true) {
+            if (value < r.getValue()){
+                if (r.getLeftChild() === null) {
+                    r.setLeftChild(new Node(value));
+                    return;
+                }
+                r = r.getLeftChild();
+            } else {
+                if (r.getRightChild() === null) {
+                    r.setRightChild(new Node(value));
+                    return;
+                }
+                r = r.getRightChild();
+            }
+        }
+    }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -44,3 +65,5 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
       prettyPrint(node.getLeftChild(), `${prefix}${isLeft ? '    ' : '│   '}`, true);
     }
   }
+
+  function make() { return new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]); }
